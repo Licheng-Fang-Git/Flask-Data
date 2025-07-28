@@ -1,0 +1,14 @@
+nohup: ignoring input
+🚀 Starting LinkedIn Analytics Flask App...
+📊 Demo mode - using generated sample data
+🌐 App will be available at: http://localhost:5000
+📈 Features available:
+   • Default Information Dashboard
+   • Interactive Demographics Charts
+   • Filtered Data Analytics
+   • Modern Bootstrap UI
+============================================================
+ * Serving Flask app 'app_simple'
+ * Debug mode: on
+Address already in use
+Port 5000 is in use by another program. Either identify and stop that program, or start the server with a different port.
