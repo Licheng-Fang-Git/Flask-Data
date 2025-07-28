@@ -1,46 +1,35 @@
-(cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF'
-diff --git a/templates/filtered.html b/templates/filtered.html
---- a/templates/filtered.html
-+++ b/templates/filtered.html
-@@ -0,0 +1,290 @@
-+{% extends "base.html" %}
-+
-+{% block title %}LinkedIn Analytics - Filtered Data{% endblock %}
-+
-+{% block content %}
-+<div class="row">
-+    <div class="col-12">
-+        <h1 class="mb-4">
-+            <i class="fas fa-filter text-primary me-2"></i>
-+            Filtered Data Analytics
-+        </h1>
-+    </div>
-+</div>
-+
-+<div class="row">
-+    <!-- Sidebar Filters -->
-+    <div class="col-md-3">
-+        <div class="card">
-+            <div class="card-header">
-+                <h5 class="card-title mb-0">
-+                    <i class="fas fa-sliders-h me-2"></i>
-+                    Choose your filter
-+                </h5>
-+            </div>
-+            <div class="card-body">
-+                <!-- Date Range -->
-+                <div class="mb-3">
-+                    <label class="form-label">Start Date:</label>
-+                    <input type="date" class="form-control" id="startDate" value="{{ start_date }}">
-+                </div>
-+                <div class="mb-3">
-+                    <label class="form-label">End Date:</label>
-+                    <input type="date" class="form-control" id="endDate" value="{{ end_date }}">
-+                </div>
-+
-+                <!-- Year Filter -->
-+                <div class="mb-3">
-+                    <label class="form-label">Pick the Year:</label>
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-filter text-primary me-2"></i>
+            Filtered Data Analytics
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <!-- Sidebar Filters -->
+  <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-sliders-h me-2"></i>
+                    Choose your filter
+                </h5>
+            </div>
+            <div class="card-body">
+                <!-- Date Range -->
+                <div class="mb-3">
+                    <label class="form-label">Start Date:</label>
+                    <input type="date" class="form-control" id="startDate" value="{{ start_date }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">End Date:</label>
+                    <input type="date" class="form-control" id="endDate" value="{{ end_date }}">
+                </div>
+
+                <!-- Year Filter -->
+                <div class="mb-3">
+                    <label class="form-label">Pick the Year:</label>
 +                    <select class="form-select" id="yearFilter" multiple>
 +                        {% for year in filter_options.years %}
 +                        <option value="{{ year }}">{{ year }}</option>
