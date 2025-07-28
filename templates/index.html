@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+
+{% block title %}LinkedIn Analytics - Default Information{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-chart-line text-primary me-2"></i>
+            LinkedIn Analytics
+        </h1>
+    </div>
+</div>
+
+<!-- Total Followers Chart -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-users me-2"></i>
+                    Total Followers
+                </h3>
+            </div>
+            <div class="card-body">
+                {% if follower_chart %}
+                <div id="followerChart" style="height: 500px;"></div>
+                {% else %}
+                <div class="alert alert-warning">No follower data available</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Demographics Section -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-chart-pie me-2"></i>
+                    Demographics
+                    <span class="badge bg-success ms-2">New</span>
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <!-- Location Demographics -->
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Total Followers Demographics</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Pick the Location:</label>
+                            <select class="form-select" id="locationFollowers" multiple>
+                                {% for location in demographics.locations %}
+                                <option value="{{ location }}">{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="locationFollowersChart" style="height: 400px;"></div>
+                        
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Location</th>
+                                        <th>Total Followers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in location_data %}
+                                    <tr>
+                                        <td>{{ row.Location }}</td>
+                                        <td>{{ row['Total followers'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Total Views Demographics</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Pick the Location:</label>
+                            <select class="form-select" id="locationViews" multiple>
+                                {% for location in demographics.locations_view %}
+                                <option value="{{ location }}">{{ location }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="locationViewsChart" style="height: 400px;"></div>
+                        
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Location</th>
+                                        <th>Total Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in location_data %}
+                                    <tr>
+                                        <td>{{ row['Location View'] }}</td>
+                                        <td>{{ row['Total views'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row">
+                    <!-- Job Function Demographics -->
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Job Field</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Pick the Job Field:</label>
+                            <select class="form-select" id="jobFollowers" multiple>
+                                {% for job in demographics.job_functions %}
+                                <option value="{{ job }}">{{ job }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="jobFollowersChart" style="height: 400px;"></div>
+                        
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Job</th>
+                                        <th>Total Followers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in job_function_data %}
+                                    <tr>
+                                        <td>{{ row['Job function'] }}</td>
+                                        <td>{{ row['Total followers'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Job View</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Pick the Job Field:</label>
+                            <select class="form-select" id="jobViews" multiple>
+                                {% for job in demographics.job_views %}
+                                <option value="{{ job }}">{{ job }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="jobViewsChart" style="height: 400px;"></div>
+                        
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Job</th>
+                                        <th>Total Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in job_function_data %}
+                                    <tr>
+                                        <td>{{ row['Job View'] }}</td>
+                                        <td>{{ row['Total views'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="row">
+                    <!-- Industry Demographics -->
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Industry Field</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Pick the Industry Field:</label>
+                            <select class="form-select" id="industryFollowers" multiple>
+                                {% for industry in demographics.industries %}
+                                <option value="{{ industry }}">{{ industry }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="industryFollowersChart" style="height: 400px;"></div>
+                        
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Industry</th>
+                                        <th>Total Followers</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in industry_data %}
+                                    <tr>
+                                        <td>{{ row.Industry }}</td>
+                                        <td>{{ row['Total followers'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h5 class="mb-3">Industry View</h5>
+                        <div class="mb-3">
+                            <label class="form-label">Pick the Industry Field:</label>
+                            <select class="form-select" id="industryViews" multiple>
+                                {% for industry in demographics.industry_views %}
+                                <option value="{{ industry }}">{{ industry }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div id="industryViewsChart" style="height: 400px;"></div>
+                        
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Industry</th>
+                                        <th>Total Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in industry_data %}
+                                    <tr>
+                                        <td>{{ row['Industry View'] }}</td>
+                                        <td>{{ row['Total views'] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Posting Frequency -->
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title mb-0">
+                    <i class="fas fa-calendar-alt me-2"></i>
+                    Posting Frequency
+                </h3>
+            </div>
+            <div class="card-body">
+                {% if frequency_chart %}
+                <div id="frequencyChart" style="height: 500px;"></div>
+                {% else %}
+                <div class="alert alert-warning">No frequency data available</div>
+                {% endif %}
+                
+                {% if frequency_data %}
+                <div class="table-responsive mt-3">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Month/Year</th>
+                                <th>Number of Posts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for month, count in frequency_data.items() %}
+                            <tr>
+                                <td>{{ month }}</td>
+                                <td>{{ count }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize charts
+    {% if follower_chart %}
+    const followerChart = {{ follower_chart|safe }};
+    Plotly.newPlot('followerChart', followerChart.data, followerChart.layout, {responsive: true});
+    {% endif %}
+
+    {% if frequency_chart %}
+    const frequencyChart = {{ frequency_chart|safe }};
+    Plotly.newPlot('frequencyChart', frequencyChart.data, frequencyChart.layout, {responsive: true});
+    {% endif %}
+
+    // Demographics chart handlers
+    function updateDemographicsChart(selectId, chartId, chartType) {
+        const select = document.getElementById(selectId);
+        const selectedValues = Array.from(select.selectedOptions).map(option => option.value);
+        
+        if (selectedValues.length > 0) {
+            const params = new URLSearchParams();
+            selectedValues.forEach(value => params.append('items', value));
+            
+            fetch(`/api/demographics/${chartType}?${params}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.chart) {
+                        const chartData = JSON.parse(data.chart);
+                        Plotly.newPlot(chartId, chartData.data, chartData.layout, {responsive: true});
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        } else {
+            Plotly.purge(chartId);
+        }
+    }
+
+    // Event listeners for demographics
+    document.getElementById('locationFollowers').addEventListener('change', function() {
+        updateDemographicsChart('locationFollowers', 'locationFollowersChart', 'location_followers');
+    });
+
+    document.getElementById('locationViews').addEventListener('change', function() {
+        updateDemographicsChart('locationViews', 'locationViewsChart', 'location_views');
+    });
+
+    document.getElementById('jobFollowers').addEventListener('change', function() {
+        updateDemographicsChart('jobFollowers', 'jobFollowersChart', 'job_followers');
+    });
+
+    document.getElementById('jobViews').addEventListener('change', function() {
+        updateDemographicsChart('jobViews', 'jobViewsChart', 'job_views');
+    });
+
+    document.getElementById('industryFollowers').addEventListener('change', function() {
+        updateDemographicsChart('industryFollowers', 'industryFollowersChart', 'industry_followers');
+    });
+
+    document.getElementById('industryViews').addEventListener('change', function() {
+        updateDemographicsChart('industryViews', 'industryViewsChart', 'industry_views');
+    });
+</script>
+{% endblock %}
